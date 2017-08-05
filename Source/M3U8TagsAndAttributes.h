@@ -36,6 +36,8 @@
  @note The EXT-X-BYTERANGE tag appeared in version 4 of the protocol.  It MUST NOT appear in a Master Playlist.
  */
 #define M3U8_EXT_X_BYTERANGE                @"#EXT-X-BYTERANGE:"
+#define M3U8_EXT_X_BYTERANGE_LENGTH         @"LENGTH"
+#define M3U8_EXT_X_BYTERANGE_OFFSET         @"OFFSET"
 
 
 /**

@@ -27,6 +27,8 @@
 
 @property (readonly, nonatomic) NSTimeInterval duration;
 @property (readonly, nonatomic, copy) NSURL *URI;
+@property (readonly, nonatomic, copy) NSString * bytesLength;
+@property (readonly, nonatomic, copy) NSString * bytesOffset;
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 

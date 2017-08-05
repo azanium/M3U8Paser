@@ -218,7 +218,8 @@
     for (int i = 0; i < count; i ++) {
         M3U8SegmentInfo *inf = [playlist.segmentList segmentInfoAtIndex:i];
         index = [URLs indexOfObject:inf.mediaURL];
-        NSString *n = [NSString stringWithFormat:@"%@%lu.%@", prefix, (unsigned long)index, sufix];
+        
+        NSString *n = [NSString stringWithFormat:@"%@%lu.%@ - %@,%@", prefix, (unsigned long)index, sufix, inf.bytesLength, inf.bytesOffset];
         [names addObject:n];
     }
     return names;

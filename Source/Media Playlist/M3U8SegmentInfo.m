@@ -46,6 +46,14 @@
     return [NSURL URLWithString:self.dictionary[M3U8_EXTINF_URI]];
 }
 
+- (NSString *)bytesLength {
+    return self.dictionary[M3U8_EXT_X_BYTERANGE_LENGTH];
+}
+
+- (NSString *)bytesOffset {
+    return self.dictionary[M3U8_EXT_X_BYTERANGE_OFFSET];
+}
+
 - (NSString *)description {
     return [NSString stringWithString:self.dictionary.description];
 }

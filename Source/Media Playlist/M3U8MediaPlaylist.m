@@ -73,6 +73,7 @@
     
     while (NSNotFound != segmentRange.location) {
         NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+        
         if (self.originalURL) {
             [params setObject:self.originalURL forKey:M3U8_URL];
         }
@@ -94,6 +95,27 @@
         remainingSegments = [remainingSegments substringFromIndex:segmentRange.location];
         NSRange extinfoLFRange = [remainingSegments rangeOfString:@"\n"];
         remainingSegments = [remainingSegments substringFromIndex:extinfoLFRange.location + 1];
+        
+        // Add bytes range (Suhendra Ahmad)
+        NSRange lfRange = [remainingSegments rangeOfString:@"\n"];
+        if (lfRange.location != NSNotFound) {
+            NSString *line = [remainingSegments substringWithRange:NSMakeRange(0, lfRange.location)];
+            line = [line stringByReplacingOccurrencesOfString:@" " withString:@""];
+                        
+            NSRange byteRange = [line rangeOfString:M3U8_EXT_X_BYTERANGE];
+            if (byteRange.location != NSNotFound) {
+                NSRange atRange = [line rangeOfString:@"@"];
+                NSRange lengthRange = NSMakeRange(byteRange.location + 17, atRange.location-(byteRange.location + 17));
+                NSRange offsetRange = NSMakeRange(atRange.location+1, lfRange.location - (atRange.location + 1));
+                NSString *lengthValue = [line substringWithRange:lengthRange];
+                NSString *offsetValue = [line substringWithRange:offsetRange];
+                
+                //NSLog(@"length: %@, %@", lengthValue, offsetValue);
+                [params setValue:lengthValue forKey:M3U8_EXT_X_BYTERANGE_LENGTH];
+                [params setValue:offsetValue forKey:M3U8_EXT_X_BYTERANGE_OFFSET];
+            }
+        }
+
         
         // Read the segment link, and ignore line start with # && blank line
         while (1) {
