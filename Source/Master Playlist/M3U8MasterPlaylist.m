@@ -36,6 +36,7 @@
     if (self = [super init]) {
         self.originalText = string;
         self.baseURL = baseURL;
+        NSLog(@"baseUrl: %@", baseURL);
         [self parseMasterPlaylist];
     }
     return self;
